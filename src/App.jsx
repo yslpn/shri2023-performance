@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect, useRef } from "preact/hooks";
 import Event from "./Event.jsx";
 
 import "./bootstrap.css";
@@ -142,12 +142,13 @@ for (let i = 0; i < 6; ++i) {
 const TABS_KEYS = Object.keys(TABS);
 
 function App() {
-  const ref = React.useRef();
-  const initedRef = React.useRef(false);
-  const [activeTab, setActiveTab] = React.useState("");
-  const [hasRightScroll, setHasRightScroll] = React.useState(false);
+  const ref = useRef();
+  const initedRef = useRef(false);
+  const [activeTab, setActiveTab] = useState("");
+  const [hasRightScroll, setHasRightScroll] = useState(false);
+  const [sizes, setSizes] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!activeTab && !initedRef.current) {
       initedRef.current = true;
       setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
@@ -158,13 +159,11 @@ function App() {
     setActiveTab(event.target.value);
   };
 
-  let sizes = [];
-  
   const onSize = (size) => {
-    sizes = [...sizes, size];
+    setSizes((prevSizes) => [...prevSizes, size]);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
 
     const newHasRightScroll = sumWidth > ref.current.offsetWidth;
@@ -254,12 +253,7 @@ function App() {
             iconLabel="Освещение"
             title="Выключить весь свет в доме и во дворе"
           />
-          <Event
-            slim={true}
-            icon="schedule"
-            iconLabel="Расписание"
-            title="Я ухожу"
-          />
+          <Event slim={true} icon="schedule" iconLabel="Расписание" title="Я ухожу" />
           <Event
             slim={true}
             icon="light2"

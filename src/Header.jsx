@@ -1,8 +1,8 @@
-import React from "react";
+import { useState } from "preact/hooks";
 
 function Header() {
-  let [expanded, setExpanded] = React.useState(false);
-  let [toggled, setToggled] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [toggled, setToggled] = useState(false);
 
   const onClick = () => {
     if (!toggled) {
