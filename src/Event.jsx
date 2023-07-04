@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "preact/hooks";
+import React from "react";
 
 function Event(props) {
-  const ref = useRef();
+  const ref = React.useRef();
 
   const { onSize } = props;
 
-  useEffect(() => {
+  React.useEffect(() => {
     const width = ref.current.offsetWidth;
     const height = ref.current.offsetHeight;
     if (onSize) {
