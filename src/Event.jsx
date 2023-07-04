@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "preact/hooks";
+import { memo } from "preact/compat";
 
-function Event(props) {
+const Event = memo((props) => {
   const ref = useRef();
 
   const { onSize } = props;
@@ -28,6 +29,6 @@ function Event(props) {
       </button>
     </li>
   );
-}
+});
 
 export default Event;
