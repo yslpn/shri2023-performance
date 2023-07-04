@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "preact/hooks";
+import { useState, useEffect, useRef } from "preact/hooks";
 import Event from "./Event.jsx";
 
 import "./bootstrap.css";
@@ -155,13 +155,13 @@ function App() {
     }
   }, [activeTab]);
 
-  const onSelectInput = useCallback((event) => {
+  const onSelectInput = (event) => {
     setActiveTab(event.target.value);
-  }, []);
+  };
 
-  const onSize = useCallback((size) => {
+  const onSize = (size) => {
     setSizes((prevSizes) => [...prevSizes, size]);
-  }, []);
+  };
 
   useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
@@ -172,7 +172,7 @@ function App() {
     }
   }, [sizes, hasRightScroll]);
 
-  const onArrowCLick = useCallback(() => {
+  const onArrowCLick = () => {
     const scroller = ref.current.querySelector(
       ".section__panel:not(.section__panel_hidden)"
     );
@@ -182,7 +182,7 @@ function App() {
         behavior: "smooth",
       });
     }
-  }, []);
+  };
 
   return (
     <main className="main">
