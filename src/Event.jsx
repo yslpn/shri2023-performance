@@ -1,6 +1,6 @@
-import React from "react";
+import React, { memo } from "react";
 
-function Event(props) {
+const Event = memo((props) => {
   const ref = React.useRef();
 
   const { onSize } = props;
@@ -28,6 +28,8 @@ function Event(props) {
       </button>
     </li>
   );
-}
+});
 
 export default Event;
+
+Event.displayName = 'Event';

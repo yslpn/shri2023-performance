@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import Event from "./Event.jsx";
 
 import "./bootstrap.css";
@@ -147,31 +147,15 @@ function App() {
   const [activeTab, setActiveTab] = React.useState("");
   const [hasRightScroll, setHasRightScroll] = React.useState(false);
 
-  React.useEffect(() => {
-    if (!activeTab && !initedRef.current) {
-      initedRef.current = true;
-      setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
-    }
-  }, [activeTab]);
+  let sizes = [];
+
+  const onSize = useCallback((size) => {
+    sizes.push(size);
+  }, [sizes]);
 
   const onSelectInput = (event) => {
     setActiveTab(event.target.value);
   };
-
-  let sizes = [];
-  
-  const onSize = (size) => {
-    sizes = [...sizes, size];
-  };
-
-  React.useEffect(() => {
-    const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-
-    const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-    if (newHasRightScroll !== hasRightScroll) {
-      setHasRightScroll(newHasRightScroll);
-    }
-  }, [sizes, hasRightScroll]);
 
   const onArrowCLick = () => {
     const scroller = ref.current.querySelector(
@@ -184,6 +168,22 @@ function App() {
       });
     }
   };
+
+  React.useEffect(() => {
+    if (!activeTab && !initedRef.current) {
+      initedRef.current = true;
+      setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
+    }
+  }, [activeTab]);
+
+  React.useEffect(() => {
+    const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
+
+    const newHasRightScroll = sumWidth > ref.current.offsetWidth;
+    if (newHasRightScroll !== hasRightScroll) {
+      setHasRightScroll(newHasRightScroll);
+    }
+  }, [sizes, hasRightScroll]);
 
   return (
     <main className="main">
