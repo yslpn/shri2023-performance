@@ -1,7 +1,8 @@
+import "preact/debug";
+
 import { useState, useEffect, useRef, useCallback } from "preact/hooks";
 import Event from "./Event.jsx";
 
-import "./bootstrap.css";
 import "./reset.css";
 import "./index.css";
 
