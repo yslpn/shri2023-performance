@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "preact/hooks";
 import Event from "./Event.jsx";
 
 import "./bootstrap.css";
@@ -142,10 +142,10 @@ for (let i = 0; i < 6; ++i) {
 const TABS_KEYS = Object.keys(TABS);
 
 function App() {
-  const ref = React.useRef();
-  const initedRef = React.useRef(false);
-  const [activeTab, setActiveTab] = React.useState("");
-  const [hasRightScroll, setHasRightScroll] = React.useState(false);
+  const ref = useRef();
+  const initedRef = useRef(false);
+  const [activeTab, setActiveTab] = useState("");
+  const [hasRightScroll, setHasRightScroll] = useState(false);
 
   let sizes = [];
 
@@ -169,14 +169,14 @@ function App() {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!activeTab && !initedRef.current) {
       initedRef.current = true;
       setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
     }
   }, [activeTab]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
 
     const newHasRightScroll = sumWidth > ref.current.offsetWidth;

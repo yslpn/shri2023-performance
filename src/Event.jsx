@@ -1,11 +1,12 @@
-import React, { memo } from "react";
+import { useEffect, useRef } from "preact/hooks";
+import { memo } from 'preact/compat';
 
 const Event = memo((props) => {
-  const ref = React.useRef();
+  const ref = useRef();
 
   const { onSize } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const width = ref.current.offsetWidth;
     const height = ref.current.offsetHeight;
     if (onSize) {
