@@ -1,9 +1,5 @@
-import "preact/debug";
-
 import { useState, useEffect, useRef, useCallback } from "preact/hooks";
 import Event from "./Event.jsx";
-
-import "./index.css";
 
 const TABS = {
   all: {
