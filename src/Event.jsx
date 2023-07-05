@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "preact/hooks";
 import { memo } from 'preact/compat';
 
-const Event = memo((props) => {
+export const Event = memo((props) => {
   const ref = useRef();
 
   const { onSize } = props;
@@ -30,7 +30,5 @@ const Event = memo((props) => {
     </li>
   );
 });
-
-export default Event;
 
 Event.displayName = 'Event';

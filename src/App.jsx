@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "preact/hooks";
-import Event from "./Event.jsx";
+import { Event } from "./Event.jsx";
+import { TabItems } from "./TabItems";
 
 const TABS = {
   all: {
@@ -145,9 +146,12 @@ function App() {
 
   let sizes = [];
 
-  const onSize = useCallback((size) => {
-    sizes.push(size);
-  }, [sizes]);
+  const onSize = useCallback(
+    (size) => {
+      sizes.push(size);
+    },
+    [sizes]
+  );
 
   const onSelectInput = (event) => {
     setActiveTab(event.target.value);
@@ -329,9 +333,7 @@ function App() {
               aria-labelledby={`tab_${key}`}
             >
               <ul className="section__panel-list">
-                {TABS[key].items.map((item, index) => (
-                  <Event key={index} {...item} onSize={onSize} />
-                ))}
+                <TabItems tabItems={TABS[key].items} onSize={onSize} />
               </ul>
             </div>
           ))}
