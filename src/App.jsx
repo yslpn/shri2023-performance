@@ -5,8 +5,9 @@ import { TABS_KEYS, TABS } from "./constants.js";
 
 function App() {
   const ref = useRef();
-  const initedRef = useRef(false);
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState(
+    new URLSearchParams(location.search).get("tab") || "all"
+  );
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
   let sizes = [];
@@ -33,13 +34,6 @@ function App() {
       });
     }
   };
-
-  useEffect(() => {
-    if (!activeTab && !initedRef.current) {
-      initedRef.current = true;
-      setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
-    }
-  }, [activeTab]);
 
   useEffect(() => {
     const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
@@ -185,23 +179,11 @@ function App() {
         </div>
 
         <div className="section__panel-wrapper" ref={ref}>
-          {TABS_KEYS.map((key) => (
-            <div
-              key={key}
-              role="tabpanel"
-              className={
-                "section__panel" +
-                (key === activeTab ? "" : " section__panel_hidden")
-              }
-              aria-hidden={key === activeTab ? "false" : "true"}
-              id={`panel_${key}`}
-              aria-labelledby={`tab_${key}`}
-            >
-              <ul className="section__panel-list">
-                <TabItems tabItems={TABS[key].items} onSize={onSize} />
-              </ul>
-            </div>
-          ))}
+          <div role="tabpanel" className="section__panel">
+            <ul className="section__panel-list">
+              <TabItems tabItems={TABS[activeTab].items} onSize={onSize} />
+            </ul>
+          </div>
           {hasRightScroll && (
             <div className="section__arrow" onClick={onArrowCLick}></div>
           )}
