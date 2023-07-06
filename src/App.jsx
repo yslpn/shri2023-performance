@@ -155,6 +155,7 @@ function App() {
     const scroller = ref.current.querySelector(
       ".section__panel:not(.section__panel_hidden)"
     );
+    
     if (scroller) {
       scroller.scrollTo({
         left: scroller.scrollLeft + 400,
