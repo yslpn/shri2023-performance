@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "preact/hooks";
+import { useState, useRef } from "preact/hooks";
 import { Event } from "./Event.jsx";
 import { TabItems } from "./TabItems";
 
