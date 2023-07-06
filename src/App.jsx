@@ -139,12 +139,12 @@ for (let i = 0; i < 6; ++i) {
 const TABS_KEYS = Object.keys(TABS);
 
 function App() {
-  const ref = useRef();
+  const ref = useRef(null);
   const [activeTab, setActiveTab] = useState(
     new URLSearchParams(location.search).get("tab") || "all"
   );
   const [size, setSize] = useState(0);
-  const hasRightScroll = size > ref.current.offsetWidth;
+  const hasRightScroll = ref.current && size > ref.current.offsetWidth;
 
   const handleChangeTab = (tab) => {
     setSize(0);
