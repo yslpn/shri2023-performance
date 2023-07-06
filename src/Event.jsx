@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "preact/hooks";
-import { memo } from 'preact/compat';
+import { memo } from "preact/compat";
 
 export const Event = memo((props) => {
   const ref = useRef();
@@ -9,7 +9,8 @@ export const Event = memo((props) => {
   useEffect(() => {
     const width = ref.current.offsetWidth;
     const height = ref.current.offsetHeight;
-    if (onSize) {
+
+    if (onSize && width && height) {
       onSize({ width, height });
     }
   });
@@ -31,4 +32,4 @@ export const Event = memo((props) => {
   );
 });
 
-Event.displayName = 'Event';
+Event.displayName = "Event";
