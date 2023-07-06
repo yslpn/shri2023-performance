@@ -144,17 +144,15 @@ function App() {
   const [activeTab, setActiveTab] = useState("");
   const [hasRightScroll, setHasRightScroll] = useState(false);
 
-  let sizes = [];
+  const [size, setSize] = useState(0);
 
-  const onSize = useCallback(
-    (size) => {
-      sizes.push(size);
-    },
-    [sizes]
-  );
+  const onSize = useCallback((newSize) => {
+    setSize((s) => s + newSize);
+  }, []);
 
-  const onSelectInput = (event) => {
-    setActiveTab(event.target.value);
+  const handleChangeTab = (tab) => {
+    setSize(0);
+    setActiveTab(tab);
   };
 
   const onArrowCLick = () => {
@@ -177,13 +175,11 @@ function App() {
   }, [activeTab]);
 
   useEffect(() => {
-    const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-
-    const newHasRightScroll = sumWidth > ref.current.offsetWidth;
+    const newHasRightScroll = size > ref.current.offsetWidth;
     if (newHasRightScroll !== hasRightScroll) {
       setHasRightScroll(newHasRightScroll);
     }
-  }, [sizes, hasRightScroll]);
+  }, [size, hasRightScroll]);
 
   return (
     <main className="main">
@@ -289,7 +285,7 @@ function App() {
           <select
             className="section__select"
             defaultValue="all"
-            onInput={onSelectInput}
+            onInput={(event) => handleChangeTab(event.target.value)}
           >
             {TABS_KEYS.map((key) => (
               <option key={key} value={key}>
@@ -311,7 +307,7 @@ function App() {
                 }
                 id={`tab_${key}`}
                 aria-controls={`panel_${key}`}
-                onClick={() => setActiveTab(key)}
+                onClick={() => handleChangeTab(key)}
               >
                 {TABS[key].title}
               </li>
@@ -333,7 +329,10 @@ function App() {
               aria-labelledby={`tab_${key}`}
             >
               <ul className="section__panel-list">
-                <TabItems tabItems={TABS[key].items} onSize={onSize} />
+                <TabItems
+                  tabItems={TABS[key].items}
+                  onSize={key === activeTab ? onSize : null}
+                />
               </ul>
             </div>
           ))}
