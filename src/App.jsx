@@ -140,11 +140,11 @@ const TABS_KEYS = Object.keys(TABS);
 
 function App() {
   const ref = useRef();
-  const initedRef = useRef(false);
-  const [activeTab, setActiveTab] = useState("");
-  const [hasRightScroll, setHasRightScroll] = useState(false);
-
+  const [activeTab, setActiveTab] = useState(
+    new URLSearchParams(location.search).get("tab") || "all"
+  );
   const [size, setSize] = useState(0);
+  const hasRightScroll = size > ref.current.offsetWidth;
 
   const onSize = useCallback((newSize) => {
     setSize((s) => s + newSize);
@@ -166,20 +166,6 @@ function App() {
       });
     }
   };
-
-  useEffect(() => {
-    if (!activeTab && !initedRef.current) {
-      initedRef.current = true;
-      setActiveTab(new URLSearchParams(location.search).get("tab") || "all");
-    }
-  }, [activeTab]);
-
-  useEffect(() => {
-    const newHasRightScroll = size > ref.current.offsetWidth;
-    if (newHasRightScroll !== hasRightScroll) {
-      setHasRightScroll(newHasRightScroll);
-    }
-  }, [size, hasRightScroll]);
 
   return (
     <main className="main">
