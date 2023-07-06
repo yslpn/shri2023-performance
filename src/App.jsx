@@ -146,10 +146,6 @@ function App() {
   const [size, setSize] = useState(0);
   const hasRightScroll = size > ref.current.offsetWidth;
 
-  const onSize = useCallback((newSize) => {
-    setSize((s) => s + newSize);
-  }, []);
-
   const handleChangeTab = (tab) => {
     setSize(0);
     setActiveTab(tab);
@@ -317,7 +313,7 @@ function App() {
               <ul className="section__panel-list">
                 <TabItems
                   tabItems={TABS[key].items}
-                  onSize={key === activeTab ? onSize : null}
+                  setSize={key === activeTab ? setSize : null}
                 />
               </ul>
             </div>

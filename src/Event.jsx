@@ -4,13 +4,13 @@ import { memo } from "preact/compat";
 export const Event = memo((props) => {
   const ref = useRef();
 
-  const { onSize } = props;
+  const { setSize } = props;
 
   useEffect(() => {
     const width = ref.current.offsetWidth;
 
-    if (onSize && width) {
-      onSize(width);
+    if (setSize && width) {
+      setSize(s => s + width);
     }
   });
 
